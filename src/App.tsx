@@ -1,13 +1,9 @@
-import React from "react";
-import Test from "./components/Test";
-
+import React from 'react'
 
 const App = () => {
   return (
-    <React.Fragment>
-      <Test/>
-    </React.Fragment>
-  );
-};
+    <div>App</div>
+  )
+}
 
-export default App;
+export default App
