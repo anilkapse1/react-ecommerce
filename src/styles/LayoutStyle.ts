@@ -9,8 +9,8 @@ export const LayoutWrapper = styled.div`
     flex: 1;
 
     aside {
-      width: 200px;
-      background: #fffdfd;
+      width: 15vw;
+      // background: #fdcbcb;
       padding: 10px;
     }
 
