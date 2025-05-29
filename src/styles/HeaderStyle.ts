@@ -1,25 +1,23 @@
 import styled from "styled-components";
 
 export const HeaderWrapper = styled.nav`
-  padding: 10px;
-  background-color: #eee;
-
-  a {
-    text-decoration: none;
-    color: #333;
-    font-weight: 500;
-    font-size: 16px;
-
-    &:hover {
-      color: #007bff;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+  border-bottom: 1px solid #ddd;
+  align-items: center;
+  
+  .left-section {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    .logo {
+        section {
+            width: 30%;
+        }
     }
+  }
 
-    &.active {
-      color: #007bff;
-      font-weight: 600;
-    }
-    &:first-of-type {
-      margin-right: 20px;
-    }
   }
 `;
