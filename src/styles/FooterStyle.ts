@@ -5,14 +5,14 @@ export const FooterWrapper = styled.footer`
   flex-wrap: wrap;
   justify-content: space-between;
   padding: 30px;
-  background: rgb(248, 248, 248);
+  background: linear-gradient(to bottom, white, #d6c7c7);
   height: 400px;
   .footer__section {
     flex: 0 1 200px;
     margin: 10px;
     .footer__title {
       margin-bottom: 10px;
-      color: #FF5733;
+      color: #b02e12;
     }
 
     .footer__list {
