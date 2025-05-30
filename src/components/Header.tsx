@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { HeaderWrapper } from "../styles/HeaderStyle";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import TextField from "@mui/material/TextField";
-import { Button, InputAdornment } from "@mui/material";
+import { InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import logo from "../assets/logo1.png";
 import { useTheme } from "@mui/material/styles";

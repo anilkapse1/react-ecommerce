@@ -1,9 +1,11 @@
 import { Typography } from "@mui/material";
 import { FooterWrapper } from "../styles/FooterStyle";
+import React from "react";
 
 const Footer = () => {
   return (
-    <FooterWrapper className="common_padding">
+    <React.Fragment>
+      <FooterWrapper className="common_padding">
         <div className="footer__section">
           <h4 className="footer__title">Shopfinity</h4>
           <p className="footer__desc">Your one-stop shop for everything!</p>
@@ -57,7 +59,8 @@ const Footer = () => {
         <div className="footer__bottom">
           <Typography variant="subtitle2">© {new Date().getFullYear()} Shopfinity. All rights reserved.</Typography>
         </div>
-    </FooterWrapper>
+      </FooterWrapper>
+    </React.Fragment>
   );
 };
 
