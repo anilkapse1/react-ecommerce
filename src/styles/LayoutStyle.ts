@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import "../styles/_colors.scss";
+import { Container } from "@mui/material";
 
 export const LayoutWrapper = styled.div`
   display: flex;

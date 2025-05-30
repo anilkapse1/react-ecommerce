@@ -5,7 +5,8 @@ export const FooterWrapper = styled.footer`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding: 30px;
+  padding-top: 30px;
+  padding-bottom: 30px;
   background: linear-gradient(to bottom, white, #d6c7c7);
   height: 400px;
   .footer__section {

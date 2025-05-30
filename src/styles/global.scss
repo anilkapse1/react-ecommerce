@@ -46,3 +46,8 @@ picture {
   height: auto;
   object-fit: cover; /* Optional: crop/scale image nicely */
 }
+
+.common_padding {
+  padding-left: calc(2% + 50px);
+  padding-right: calc(2% + 50px);
+}

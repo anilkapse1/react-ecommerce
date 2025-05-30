@@ -14,7 +14,7 @@ const Header = () => {
 
   return (
     <React.Fragment>
-      <HeaderWrapper>
+      <HeaderWrapper className="common_padding">
         <section className="left-section">
           <NavLink to="/" className="logo">
             <section>
