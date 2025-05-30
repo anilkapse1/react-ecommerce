@@ -1,5 +1,5 @@
 import React from "react";
-import type { CartItem } from "../types/Product";
+import type { CartItem } from "../models/IReactProp";
 import "../styles/ShoppingCartTile.scss";
 
 interface ShoppingCartTileProps {

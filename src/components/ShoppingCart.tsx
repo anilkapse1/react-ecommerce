@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ShoppingCartTile from "./ShoppingCartTile";
 import { productService } from "../services/ProductService";
-import type { CartItem, Product } from "../types/Product";
+import type { CartItem, Product } from "../models/IReactProp";
 import "../styles/ShoppingCart.scss";
 import { Typography } from "@mui/material";
 
