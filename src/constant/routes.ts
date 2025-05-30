@@ -3,11 +3,12 @@ export const ROUTE_CONFIG = {
     Routes: {
         Home: {
             name: 'home',
-            path: '/'
+            path: 'react-ecommerce/'
         },
         Cart: {
             name: 'cart',
-            path: '/cart'
+            path: 'cart'
         }
     }
 };
+

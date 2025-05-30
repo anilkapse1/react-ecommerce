@@ -1,6 +1,8 @@
 import React from "react";
 import type { CartItem } from "../models/IReactProp";
 import "../styles/ShoppingCartTile.scss";
+import { Button } from "@mui/material";
+import '../styles/_colors.scss'
 
 interface ShoppingCartTileProps {
   item: CartItem;
@@ -85,10 +87,10 @@ const ShoppingCartTile: React.FC<ShoppingCartTileProps> = ({
         </div>
         
         <div className="cart-tile__actions">
-          <button className="add-to-cart-btn">Add to cart</button>
-          <button className="remove-btn" onClick={() => onRemove(item.id)}>
+          <Button sx={{backgroundColor: 'var(--common-theme-color)'}} variant="contained">Add to cart</Button>
+          <Button variant="text" onClick={() => onRemove(item.id)}>
             Remove
-          </button>
+          </Button>
         </div>
       </div>
     </div>
