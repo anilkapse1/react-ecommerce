@@ -12,7 +12,7 @@ const ShoppingCart: React.FC = () => {
     const loadSampleProducts = async () => {
       try {
         const products = await productService.getAllProducts();
-        const sampleCartItems: CartItem[] = products.slice(0, 12).map(product => ({
+        const sampleCartItems: CartItem[] = products.map(product => ({
           ...product,
           quantity: 1
         }));
