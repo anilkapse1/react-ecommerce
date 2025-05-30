@@ -2,7 +2,7 @@ import { FooterWrapper } from "../styles/FooterStyle";
 
 const Footer = () => {
   return (
-    <FooterWrapper>
+    <FooterWrapper className="common_padding">
         <div className="footer__section">
           <h4 className="footer__title">Shopfinity</h4>
           <p className="footer__desc">Your one-stop shop for everything!</p>
