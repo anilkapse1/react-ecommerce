@@ -3,11 +3,15 @@ import { NavLink } from "react-router-dom";
 import { HeaderWrapper } from "../styles/HeaderStyle";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import TextField from "@mui/material/TextField";
-import { InputAdornment } from "@mui/material";
+import { Button, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import logo from '../assets/logo1.png'
+import logo from "../assets/logo1.png";
+import { useTheme } from "@mui/material/styles";
 
 const Header = () => {
+  const theme = useTheme();
+  console.log("Current theme:", theme); // Check this in browser dev tools
+
   return (
     <React.Fragment>
       <HeaderWrapper>
@@ -23,7 +27,7 @@ const Header = () => {
             placeholder="Search products..."
             variant="outlined"
             size="small"
-            sx={{borderRadius: "4px" }}
+            sx={{ borderRadius: "4px" }}
             slotProps={{
               input: {
                 startAdornment: (

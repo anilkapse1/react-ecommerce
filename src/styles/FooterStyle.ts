@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import '../styles/_colors.scss'
 
 export const FooterWrapper = styled.footer`
   display: flex;
@@ -12,7 +13,7 @@ export const FooterWrapper = styled.footer`
     margin: 10px;
     .footer__title {
       margin-bottom: 10px;
-      color: #b02e12;
+      color: var(--common-heading);
     }
 
     .footer__list {
@@ -28,13 +29,10 @@ export const FooterWrapper = styled.footer`
       }
     }
   }
-  . footer__bottom {
+  .footer__bottom {
     width: 100%;
     text-align: center;
     margin-top: 20px;
-    border-top: 1px solid #333;
     padding-top: 10px;
-    font-size: 14px;
-    color: red;
   }
 `;

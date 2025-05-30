@@ -1,7 +1,8 @@
 import styled from "styled-components";
+import "../styles/_colors.scss";
 
 export const HeaderWrapper = styled.nav`
-  background-color: #fff;
+  background-color:  var(--common-background);
   display: flex;
   justify-content: space-between;
   padding: 10px 20px;
