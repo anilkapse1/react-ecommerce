@@ -1,3 +1,4 @@
+import { Typography } from "@mui/material";
 import { FooterWrapper } from "../styles/FooterStyle";
 
 const Footer = () => {
@@ -54,7 +55,7 @@ const Footer = () => {
         </div>
 
         <div className="footer__bottom">
-          <p>© {new Date().getFullYear()} Shopfinity. All rights reserved.</p>
+          <Typography variant="subtitle2">© {new Date().getFullYear()} Shopfinity. All rights reserved.</Typography>
         </div>
     </FooterWrapper>
   );
