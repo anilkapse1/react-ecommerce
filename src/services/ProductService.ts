@@ -1,4 +1,4 @@
-import type { Product } from '../types/Product';
+import type { Product } from '../models/IReactProp';
 
 const API_CONFIG = {
   baseUrl: 'https://dummyjson.com',
