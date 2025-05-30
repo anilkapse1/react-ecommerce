@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+@import "./_colors";
 
 *,
 *::before,
@@ -18,23 +19,22 @@ html:focus-within {
 }
 
 body {
-  background-color: #fff;
-  color: #333;
+  background-color: var(--common-background);
+  color: var(--common-text);
 }
-
 
 a {
   text-decoration: none;
-  color: #333;
+  color: var(--common-link);
   font-weight: 500;
   font-size: 16px;
 
   &:hover {
-    color: #FF5733;
+    color: var(--common-link-hover);
   }
 
   &.active {
-    color: #007bff;
+    color: var(--common-link-active);
     font-weight: 600;
   }
 }
@@ -46,4 +46,3 @@ picture {
   height: auto;
   object-fit: cover; /* Optional: crop/scale image nicely */
 }
-

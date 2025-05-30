@@ -1,16 +1,15 @@
 import styled from "styled-components";
+import "../styles/_colors.scss";
 
 export const LayoutWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  // height: 100vh;
   .main-content {
     display: flex;
     flex: 1;
 
     aside {
       width: 15vw;
-      // background: #fdcbcb;
       padding: 10px;
     }
 
