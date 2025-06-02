@@ -1,20 +1,9 @@
 import { createContext, useContext, useState } from "react";
 import type { ReactNode } from "react";
 import ToastContainer from "../components/shared/ToastContainer";
+import type { ToastContextType, ToastMessage, ToastType } from "../models/IToast";
 
-type ToastType = "success" | "error" | "info";
 
-interface ToastMessage {
-  id: number;
-  type: ToastType;
-  message: string;
-}
-
-interface ToastContextType {
-  toasts: ToastMessage[];
-  showToast: (message: string, type?: ToastType) => void;
-  removeToast: (id: number) => void;
-}
 
 const ToastContext = createContext<ToastContextType | undefined>(undefined);
 
