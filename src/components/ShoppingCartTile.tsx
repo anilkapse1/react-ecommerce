@@ -1,26 +1,17 @@
 import React from "react";
-<<<<<<< HEAD
-import type { CartItem } from "../models/IReactProp";
-import { useNavigate } from "react-router-dom";
-=======
->>>>>>> 9ac774b3ee484c8c240dc9deb7ed564fa5f5335a
 import "../styles/ShoppingCartTile.scss";
 import { Button } from "@mui/material";
 import "../styles/_colors.scss";
 import type { ShoppingCartTileProps } from "../models/IProduct";
+import { useNavigate } from "react-router-dom";
 
 
-<<<<<<< HEAD
 const ShoppingCartTile: React.FC<ShoppingCartTileProps> = ({
   item,
   onUpdateQuantity,
   onRemove,
 }) => {
   const navigate = useNavigate();
-=======
-
-const ShoppingCartTile: React.FC<ShoppingCartTileProps> = ({ item, onUpdateQuantity, onRemove }) => {
->>>>>>> 9ac774b3ee484c8c240dc9deb7ed564fa5f5335a
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newQuantity = parseInt(e.target.value);
     if (newQuantity > 0) {
