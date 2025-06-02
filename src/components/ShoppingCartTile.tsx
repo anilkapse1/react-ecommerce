@@ -3,10 +3,15 @@ import "../styles/ShoppingCartTile.scss";
 import { Button } from "@mui/material";
 import "../styles/_colors.scss";
 import type { ShoppingCartTileProps } from "../models/IProduct";
+import { useNavigate } from "react-router-dom";
 
 
-
-const ShoppingCartTile: React.FC<ShoppingCartTileProps> = ({ item, onUpdateQuantity, onRemove }) => {
+const ShoppingCartTile: React.FC<ShoppingCartTileProps> = ({
+  item,
+  onUpdateQuantity,
+  onRemove,
+}) => {
+  const navigate = useNavigate();
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newQuantity = parseInt(e.target.value);
     if (newQuantity > 0) {
@@ -28,8 +33,12 @@ const ShoppingCartTile: React.FC<ShoppingCartTileProps> = ({ item, onUpdateQuant
     );
   };
 
+   const handleCardClick = () => {
+    navigate(`/react-ecommerce/products/${item.id}`);
+  };
+
   return (
-    <div className="cart-tile">
+    <div className="cart-tile" onClick={handleCardClick}>
       <div className="cart-tile__image">
         <img src={item.thumbnail} alt={item.title} />
       </div>
