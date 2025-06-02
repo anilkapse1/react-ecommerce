@@ -23,6 +23,8 @@ const transformers = {
     rating: data.rating,
     stock: data.stock
   }),
+
+  
   
   productList: (data: any): Product[] => 
     data.products?.map(transformers.product) || []

@@ -1,2 +1,0 @@
-What are utils?
-They are small functions or helpers that perform common, often-used tasks.

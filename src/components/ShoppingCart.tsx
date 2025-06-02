@@ -1,31 +1,67 @@
 import React, { useState, useEffect } from "react";
 import ShoppingCartTile from "./ShoppingCartTile";
-import { productService } from "../services/ProductService";
 import type { CartItem, Product } from "../models/IReactProp";
 import "../styles/ShoppingCart.scss";
 import { Typography } from "@mui/material";
+import ProductService from "../services/product.service";
+import { useToast } from "../context/ToastContext";
 
 const ShoppingCart: React.FC = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const { showToast } = useToast();
+
+  // useEffect(() => {
+  //   const loadSampleProducts = async () => {
+  //     try {
+  //       const products = await productService.getAllProducts();
+  //       const sampleCartItems: CartItem[] = products.map((product) => ({
+  //         ...product,
+  //         quantity: 1,
+  //       }));
+  //       console.log("=======1 product is:", sampleCartItems);
+  //       setCartItems(sampleCartItems);
+  //     } catch (error) {
+  //       console.error("Failed to load products:", error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   loadSampleProducts();
+  // }, []);
 
   useEffect(() => {
-    const loadSampleProducts = async () => {
+    const getProducts = async () => {
       try {
-        const products = await productService.getAllProducts();
-        const sampleCartItems: CartItem[] = products.map((product) => ({
-          ...product,
-          quantity: 1,
-        }));
-        setCartItems(sampleCartItems);
+        setLoading(true);
+        const productData = await ProductService.getProducts();
+        if (productData.products) {
+          const transformData = productData.products.map(
+            ({ id, title, price, thumbnail, brand, category, description, rating, stock }) => ({
+              id,
+              title,
+              price,
+              thumbnail,
+              brand,
+              category,
+              description,
+              rating,
+              stock,
+              quantity: 1,
+            })
+          );
+          setCartItems(transformData);
+          showToast("Products loaded successfully!", "success");
+        }
       } catch (error) {
-        console.error("Failed to load products:", error);
+        showToast("Failed to load a product", "error");
       } finally {
         setLoading(false);
       }
     };
 
-    loadSampleProducts();
+    getProducts();
   }, []);
 
   const handleUpdateQuantity = (id: number, quantity: number) => {
