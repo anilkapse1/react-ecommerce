@@ -1,22 +1,26 @@
 import React from "react";
+<<<<<<< HEAD
 import type { CartItem } from "../models/IReactProp";
 import { useNavigate } from "react-router-dom";
+=======
+>>>>>>> 9ac774b3ee484c8c240dc9deb7ed564fa5f5335a
 import "../styles/ShoppingCartTile.scss";
 import { Button } from "@mui/material";
-import '../styles/_colors.scss'
+import "../styles/_colors.scss";
+import type { ShoppingCartTileProps } from "../models/IProduct";
 
-interface ShoppingCartTileProps {
-  item: CartItem;
-  onUpdateQuantity: (id: number, quantity: number) => void;
-  onRemove: (id: number) => void;
-}
 
+<<<<<<< HEAD
 const ShoppingCartTile: React.FC<ShoppingCartTileProps> = ({
   item,
   onUpdateQuantity,
   onRemove,
 }) => {
   const navigate = useNavigate();
+=======
+
+const ShoppingCartTile: React.FC<ShoppingCartTileProps> = ({ item, onUpdateQuantity, onRemove }) => {
+>>>>>>> 9ac774b3ee484c8c240dc9deb7ed564fa5f5335a
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newQuantity = parseInt(e.target.value);
     if (newQuantity > 0) {
@@ -28,7 +32,7 @@ const ShoppingCartTile: React.FC<ShoppingCartTileProps> = ({
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 !== 0;
     const emptyStars = 5 - Math.ceil(rating);
-    
+
     return (
       <div className="rating-stars">
         {"★".repeat(fullStars)}
@@ -47,17 +51,17 @@ const ShoppingCartTile: React.FC<ShoppingCartTileProps> = ({
       <div className="cart-tile__image">
         <img src={item.thumbnail} alt={item.title} />
       </div>
-      
+
       <div className="cart-tile__content">
         <div className="cart-tile__brand">{item.brand}</div>
-        
+
         <h3 className="cart-tile__title">{item.title}</h3>
-        
+
         <div className="cart-tile__rating">
           {renderStars(item.rating)}
           <span className="rating-count">({Math.floor(Math.random() * 1000)})</span>
         </div>
-        
+
         <div className="cart-tile__pricing">
           <div className="current-price">
             <span className="currency">₹</span>
@@ -69,11 +73,11 @@ const ShoppingCartTile: React.FC<ShoppingCartTileProps> = ({
           </div>
           <div className="discount">({Math.floor(20 + Math.random() * 30)}% off)</div>
         </div>
-        
+
         <div className="cart-tile__delivery">
           FREE delivery <strong>Wed, 4 Jun</strong>
         </div>
-        
+
         <div className="cart-tile__quantity-section">
           <div className="cart-tile__quantity">
             <label htmlFor={`quantity-${item.id}`}>Qty:</label>
@@ -86,14 +90,14 @@ const ShoppingCartTile: React.FC<ShoppingCartTileProps> = ({
               onChange={handleQuantityChange}
             />
           </div>
-          
-          <div className="cart-tile__total">
-            Total: ₹{(item.price * 80 * item.quantity).toFixed(0)}
-          </div>
+
+          <div className="cart-tile__total">Total: ₹{(item.price * 80 * item.quantity).toFixed(0)}</div>
         </div>
-        
+
         <div className="cart-tile__actions">
-          <Button sx={{backgroundColor: 'var(--common-theme-color)'}} variant="contained">Add to cart</Button>
+          <Button sx={{ backgroundColor: "var(--common-theme-color)" }} variant="contained">
+            Add to cart
+          </Button>
           <Button variant="text" onClick={() => onRemove(item.id)}>
             Remove
           </Button>
