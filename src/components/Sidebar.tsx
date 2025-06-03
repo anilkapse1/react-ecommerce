@@ -59,7 +59,6 @@ const [value, setValue] =  React.useState([0,100]);
 
   return (
     <>
-    <div>Sidebar</div>
     <div>Price Range</div>
     <div>
       <Slider
