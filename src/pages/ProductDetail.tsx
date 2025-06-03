@@ -1,9 +1,8 @@
-// pages/ProductDetail.tsx
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import type { Product } from '../models/IReactProp';
 import { Button } from '@mui/material';
 import '../styles/ProductDetail.scss';
+import type { Product } from '../models/IProduct';
 
 const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
