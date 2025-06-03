@@ -13,7 +13,7 @@ import type { Product } from "../models/IProduct";
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const { products, setProducts, loading, setLoading, refreshProducts } = useProductContext();
+  const { setProducts, setLoading, refreshProducts } = useProductContext();
   const { showToast } = useToast();
 
   useEffect(() => {
