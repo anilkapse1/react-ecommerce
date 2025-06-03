@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { HeaderWrapper } from "../styles/HeaderStyle";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";

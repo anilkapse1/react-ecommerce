@@ -1,7 +1,8 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useProductContext } from "../context/ProductContext";
-import { Button, FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, Stack, TextField, Typography } from "@mui/material";
+import { Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Stack, TextField, Typography } from "@mui/material";
 import { useFilter } from "../context/FilterContext";
+import Grid from '@mui/material/Grid';
 
 const Sidebar = () => {
   const { products, setProducts, originalProducts } = useProductContext();
@@ -96,7 +97,7 @@ const Sidebar = () => {
 
       {/* MIN MAX */}
       <Grid container spacing={2}>
-        <Grid item xs={3}>
+        <Grid size={3}>
           <TextField
             fullWidth
             label="Min"
@@ -107,7 +108,7 @@ const Sidebar = () => {
             onChange={handleMinPriceChange}
           />
         </Grid>
-        <Grid item xs={3}>
+        <Grid size={3}>
           <TextField
             fullWidth
             label="Max"
