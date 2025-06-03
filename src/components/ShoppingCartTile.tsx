@@ -82,7 +82,7 @@ const ShoppingCartTile: React.FC<ShoppingCartTileProps> = ({
             />
           </div>
 
-          <div className="cart-tile__total">Total: ₹{(item.price * 80 * item.quantity).toFixed(0)}</div>
+          <div className="cart-tile__total">Total: ₹{(item.price * 80 * (item.quantity ?? 0)).toFixed(0)}</div>
         </div>
 
         <div className="cart-tile__actions">
