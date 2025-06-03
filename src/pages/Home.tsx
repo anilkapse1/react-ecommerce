@@ -1,4 +1,5 @@
 
+import React from "react";
 import ShoppingCart from "../components/ShoppingCart";
 
 const Home = () => {
@@ -7,4 +8,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default React.memo(Home);

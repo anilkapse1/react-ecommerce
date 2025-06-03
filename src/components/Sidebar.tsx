@@ -1,119 +1,153 @@
-import React, { useEffect, useState } from "react";
-import {
-  Slider,
-  Stack,
-  Rating,
-  FormGroup,
-  FormControlLabel,
-  Checkbox,
-  Typography,
-} from "@mui/material";
-import ProductService from "../services/product.service";
-import { useToast } from "../context/ToastContext";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useProductContext } from "../context/ProductContext";
-import type { Product } from "../models/IProduct";
+import { Button, FormControl, FormControlLabel, FormLabel, Grid, Radio, RadioGroup, Stack, TextField, Typography } from "@mui/material";
+import { useFilter } from "../context/FilterContext";
 
-const Sidebar: React.FC = () => {
-  const [priceFilter, setPriceFilter] = useState<string>("");
-  const [sliderValue, setSliderValue] = useState<number[]>([0, 100]);
-  const { setProducts, setLoading, refreshProducts } = useProductContext();
-  const { showToast } = useToast();
+const Sidebar = () => {
+  const { products, setProducts, originalProducts } = useProductContext();
+  const { searchProducts, refreshProducts } = useProductContext();
 
-  // Handle slider changes
-  const handleSliderChange = (
-    event: Event,
-    newValue: number | number[]
-  ): void => {
-    console.log('event:', event);
-    const value = Array.isArray(newValue) ? newValue : [newValue, 100];
-    setSliderValue(value);
-    setPriceFilter(`${value[0]}-${value[1]}`);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [keywords] = useState<string[]>(["apple", "watch", "fashion", "trend", "shoes", "shirt"]);
+  const [selectedKeyword, setSelectedKeyword] = useState<string | null>(null);
+
+  const { setSearchQuery, selectedCategory, setSelectedCategory, minPrice, setMinPrice, maxPrice, setMaxPrice, keyWord, setKeyword } =
+    useFilter();
+
+  useEffect(() => {
+    if (originalProducts.length > 0) {
+      const uniqueCategories = Array.from(new Set(originalProducts.map((product) => product.category)));
+      setCategories(uniqueCategories);
+    }
+  }, [originalProducts]);
+
+  // SET MIN PRICE
+  const handleMinPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setMinPrice(value ? parseFloat(value) : undefined);
   };
 
-  // Debounced fetch on price filter change
-  useEffect(() => {
-    const delayDebounce = setTimeout(() => {
-      if (priceFilter.trim() !== "") {
-        fetchPriceFilteredProducts(priceFilter);
-      } else {
-        refreshProducts();
-      }
-    }, 500);
+  // SET MAX PRICE
+  const handleMaxPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setMaxPrice(value ? parseFloat(value) : undefined);
+  };
 
-    return () => clearTimeout(delayDebounce);
-  }, [priceFilter]);
+  // SET CATEGORIES
+  const handleCategoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedCategory(event.target.value);
+  };
 
-  // Fetch filtered products by price
-  const fetchPriceFilteredProducts = async (value: string) => {
-    setLoading(true);
-    try {
-      const productData = await ProductService.getProductsBySearch(value);
-      if (productData.products) {
-        const transformData = productData.products.map(
-          ({
-            id,
-            title,
-            price,
-            thumbnail,
-            brand,
-            category,
-            description,
-            rating,
-            stock,
-          }: Product) => ({
-            id,
-            title,
-            price,
-            thumbnail,
-            brand,
-            category,
-            description,
-            rating,
-            stock,
-            quantity: 1,
-          })
-        );
-        setProducts(transformData);
-        showToast("Products loaded successfully!", "success");
-      }
-    } catch (e) {
-      showToast("Failed to load products", "error");
-    } finally {
-      setLoading(false);
+  // HANDLE KEYWORDS
+  const handleKeywordClick = (keyword: string) => {
+    if (selectedKeyword === keyword) {
+      setSelectedKeyword(null);
+      setKeyword(""); 
+    } else {
+      setSelectedKeyword(keyword);
+      setKeyword(keyword); 
     }
   };
 
+  // RESET FILTER
+  const handleResetFilters = () => {
+    setSearchQuery("");
+    setMinPrice(undefined);
+    setMaxPrice(undefined);
+    setSelectedCategory("");
+    setKeyword("");
+    refreshProducts();
+  };
+
+  useEffect(() => {
+    let filteredProduct = originalProducts;
+
+    if (selectedCategory && selectedCategory.trim() !== "") {
+      filteredProduct = filteredProduct.filter((product) => product.category === selectedCategory);
+    }
+
+    if (minPrice !== undefined && maxPrice !== undefined) {
+      if (minPrice <= maxPrice) {
+        filteredProduct = filteredProduct.filter((product) => product.price >= minPrice && product.price <= maxPrice);
+      } else {
+        filteredProduct = [];
+      }
+    } else if (minPrice !== undefined) {
+      filteredProduct = filteredProduct.filter((product) => product.price >= minPrice);
+    } else if (maxPrice !== undefined) {
+      filteredProduct = filteredProduct.filter((product) => product.price <= maxPrice);
+    }
+
+    if (keyWord && keyWord.trim() !== "") {
+      searchProducts(keyWord); // This is async and should not be part of sync filtering
+      return;
+    }
+
+    setProducts(filteredProduct);
+  }, [selectedCategory, minPrice, maxPrice, keyWord]);
+
+  console.log("final product is:", products);
+
   return (
-    <>
-      <Typography variant="h6">Price Range</Typography>
-      <Slider
-        value={sliderValue}
-        onChange={handleSliderChange}
-        valueLabelDisplay="auto"
-        min={0}
-        max={100}
-      />
-      <Typography variant="body2">
-        Your range of price is between ₹{sliderValue[0]} and ₹{sliderValue[1]}
+    <React.Fragment>
+      <Typography variant="h1" gutterBottom>
+        Store
       </Typography>
 
-      <Typography variant="h6" sx={{ mt: 3 }}>
-        Customer Rating
+      {/* MIN MAX */}
+      <Grid container spacing={2}>
+        <Grid item xs={3}>
+          <TextField
+            fullWidth
+            label="Min"
+            type="number"
+            variant="outlined"
+            name="min"
+            value={minPrice ?? ""}
+            onChange={handleMinPriceChange}
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <TextField
+            fullWidth
+            label="Max"
+            type="number"
+            variant="outlined"
+            name="max"
+            value={maxPrice ?? ""}
+            onChange={handleMaxPriceChange}
+          />
+        </Grid>
+      </Grid>
+
+      {/* CATEGORIES */}
+      <FormControl component="fieldset" fullWidth sx={{ mt: 3 }}>
+        <FormLabel component="legend">Categories</FormLabel>
+        <RadioGroup name="category" value={selectedCategory} onChange={handleCategoryChange}>
+          {categories.map((val, idx) => (
+            <FormControlLabel key={idx} value={val} control={<Radio />} label={val.toUpperCase()} />
+          ))}
+        </RadioGroup>
+      </FormControl>
+
+      {/* KEY WORDS */}
+      <Typography variant="h6" sx={{ mt: 3, mb: 1 }}>
+        Keywords
       </Typography>
-      <Stack>
-        <Rating name="half-rating" defaultValue={0} precision={0.5} /> & Up
+      <Stack spacing={1}>
+        {keywords.map((keyword, index) => (
+          <Button key={index} variant={selectedKeyword === keyword ? "contained" : "outlined"} onClick={() => handleKeywordClick(keyword)} fullWidth>
+            {keyword.toUpperCase()}
+          </Button>
+        ))}
       </Stack>
 
-      <Typography variant="h6" sx={{ mt: 3 }}>
-        Category
-      </Typography>
-      <FormGroup>
-        <FormControlLabel control={<Checkbox />} label="Beauty" />
-        <FormControlLabel control={<Checkbox />} label="Groceries" />
-        <FormControlLabel control={<Checkbox />} label="Furniture" />
-      </FormGroup>
-    </>
+      {/* RESET FILTER */}
+      <Button variant="contained" color="secondary" fullWidth sx={{ mt: 3 }} onClick={handleResetFilters}>
+        Reset Filters
+      </Button>
+    </React.Fragment>
   );
 };
 
-export default Sidebar;
+export default React.memo(Sidebar);
