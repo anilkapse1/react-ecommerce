@@ -1,5 +1,6 @@
+
+@use "./colors";
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
-@import "./_colors";
 
 *,
 *::before,
@@ -45,4 +46,10 @@ picture {
   display: block;
   height: auto;
   object-fit: cover; /* Optional: crop/scale image nicely */
+}
+
+
+.common_padding {
+  padding-left: calc(2% + 50px);
+  padding-right: calc(2% + 50px);
 }

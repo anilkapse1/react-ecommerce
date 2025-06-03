@@ -5,9 +5,11 @@ export const FooterWrapper = styled.footer`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  padding: 30px;
+  padding-top: 30px;
+  padding-bottom: 30px;
   background: linear-gradient(to bottom, white, #d6c7c7);
   height: 400px;
+  margin-top: 50px;
   .footer__section {
     flex: 0 1 200px;
     margin: 10px;

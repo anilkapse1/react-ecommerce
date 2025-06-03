@@ -73,6 +73,23 @@ class ProductService {
   getCategories = this.methods.getCategories;
   getProductsByCategory = this.methods.getProductsByCategory;
   searchProducts = this.methods.searchProducts;
+
+}
+
+class filteration{
+  private async fetchData<T>(endpoint: string): Promise<T> {
+    try {
+      const response = await fetch(`${API_CONFIG.baseUrl}${endpoint}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('API Error:', error);
+      throw error;
+    }
+  }
+
 }
 
 export const productService = new ProductService();
