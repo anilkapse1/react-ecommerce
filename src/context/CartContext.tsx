@@ -1,15 +1,8 @@
 import React, { createContext, useContext, useState } from "react";
-import type { ReactNode } from "react";
-import type { CartItem, Product } from "../models/IReactProp";
+import type { CartContextType, Product } from "../models/IProduct";
+import type { IReactProp } from "../models/IReactProp";
 
-interface CartContextType {
-  cartItems: CartItem[];
-  addToCart: (product: Product, quantity?: number) => void;
-  updateCartQuantity: (id: number, quantity: number) => void;
-  removeFromCart: (id: number) => void;
-  getCartItemsCount: () => number;
-  getTotalPrice: () => number;
-}
+
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
@@ -21,19 +14,15 @@ export const useCart = () => {
   return context;
 };
 
-interface CartProviderProps {
-  children: ReactNode;
-}
-
-export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+export const CartProvider: React.FC<IReactProp> = ({ children }) => {
+  const [cartItems, setCartItems] = useState<Product[]>([]);
 
   const addToCart = (product: Product, quantity: number = 1) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find((item) => item.id === product.id);
 
       if (existingItem) {
-        return prevItems.map((item) => (item.id === product.id ? { ...item, quantity: item.quantity + quantity } : item));
+        return prevItems.map((item) => (item.id === product.id ? { ...item, quantity: (item.quantity ?? 0) + quantity } : item));
       } else {
         return [...prevItems, { ...product, quantity }];
       }
@@ -49,11 +38,11 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   };
 
   const getCartItemsCount = () => {
-    return cartItems.reduce((sum, item) => sum + item.quantity, 0);
+    return cartItems.reduce((sum, item) => sum + (item.quantity ?? 0), 0);
   };
 
   const getTotalPrice = () => {
-    return cartItems.reduce((sum, item) => sum + item.price * 80 * item.quantity, 0);
+    return cartItems.reduce((sum, item) => sum + item.price * 80 * (item.quantity ?? 0), 0);
   };
 
   return (

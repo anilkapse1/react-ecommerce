@@ -8,7 +8,7 @@ export interface Product {
   description: string;
   rating: number;
   stock: number;
-  quantity: number;
+  quantity?: number;
 }
 
 export interface ProductContextType {
@@ -23,4 +23,13 @@ export interface ShoppingCartTileProps {
   item: Product;
   onUpdateQuantity: (id: number, quantity: number) => void;
   onRemove: (id: number) => void;
+}
+
+export interface CartContextType {
+  cartItems: Product[];
+  addToCart: (product: Product, quantity?: number) => void;
+  updateCartQuantity: (id: number, quantity: number) => void;
+  removeFromCart: (id: number) => void;
+  getCartItemsCount: () => number;
+  getTotalPrice: () => number;
 }
