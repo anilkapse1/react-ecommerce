@@ -91,9 +91,6 @@ const Sidebar = () => {
 
   return (
     <React.Fragment>
-      <Typography variant="h1" gutterBottom>
-        Store
-      </Typography>
 
       {/* MIN MAX */}
       <Grid container spacing={2}>
