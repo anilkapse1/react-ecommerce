@@ -3,15 +3,22 @@ import { NavLink } from "react-router-dom";
 import { HeaderWrapper } from "../styles/HeaderStyle";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import TextField from "@mui/material/TextField";
-import { InputAdornment } from "@mui/material";
+import { InputAdornment, Badge } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import logo from "../assets/logo1.png";
 import { useProductContext } from "../context/ProductContext";
+import { ROUTE_CONFIG } from "../constant/routes";
+import { useCart } from "../context/CartContext";
+import ProductService from "../services/product.service";
+import { useToast } from "../context/ToastContext";
+import type { Product } from "../models/IProduct";
 import { useFilter } from "../context/FilterContext";
 
 const Header = () => {
-  const { refreshProducts, searchProducts } = useProductContext();
+  const { refreshProducts, setLoading, searchProducts } = useProductContext();
   const { searchQuery, setSearchQuery } = useFilter();
+  const { showToast } = useToast();
+  const { getCartItemsCount } = useCart();
 
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
@@ -57,9 +64,12 @@ const Header = () => {
             }}
           />
         </section>
+
         <section className="right-section">
-          <NavLink to="/cart" className="logo">
-            <ShoppingCartOutlinedIcon />
+          <NavLink to={ROUTE_CONFIG.Routes.Cart.path} className="logo">
+            <Badge badgeContent={getCartItemsCount()} color="primary">
+              <ShoppingCartOutlinedIcon />
+            </Badge>
           </NavLink>
         </section>
       </HeaderWrapper>

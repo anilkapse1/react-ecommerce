@@ -23,8 +23,11 @@ export interface ProductContextType {
 
 export interface ShoppingCartTileProps {
   item: Product;
+  onAddToCart: (product: Product, quantity?: number) => void;
+  showQuantityControls: boolean;
   onUpdateQuantity: (id: number, quantity: number) => void;
   onRemove: (id: number) => void;
+  isInCart?: boolean;
 }
 
 export interface CartContextType {

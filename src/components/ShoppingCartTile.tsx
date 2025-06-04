@@ -1,22 +1,35 @@
 import React from "react";
-import "../styles/ShoppingCartTile.scss";
 import { Button } from "@mui/material";
 import "../styles/_colors.scss";
-import type { ShoppingCartTileProps } from "../models/IProduct";
+import type { Product, ShoppingCartTileProps } from "../models/IProduct";
 import { useNavigate } from "react-router-dom";
-
+import "../styles/ShoppingCartTile.scss";
 
 const ShoppingCartTile: React.FC<ShoppingCartTileProps> = ({
   item,
+  onAddToCart,
+  showQuantityControls = false,
   onUpdateQuantity,
   onRemove,
+   isInCart = false
 }) => {
   const navigate = useNavigate();
+
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.stopPropagation();
     const newQuantity = parseInt(e.target.value);
     if (newQuantity > 0) {
       onUpdateQuantity(item.id, newQuantity);
     }
+  };
+
+  const handleCardClick = () => {
+    navigate(`/react-ecommerce/products/${item.id}`);
+  };
+
+  const handleAddToCartClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onAddToCart(item as Product, 1);
   };
 
   const renderStars = (rating: number) => {
@@ -33,10 +46,6 @@ const ShoppingCartTile: React.FC<ShoppingCartTileProps> = ({
     );
   };
 
-   const handleCardClick = () => {
-    navigate(`/react-ecommerce/products/${item.id}`);
-  };
-
   return (
     <div className="cart-tile" onClick={handleCardClick}>
       <div className="cart-tile__image">
@@ -50,7 +59,9 @@ const ShoppingCartTile: React.FC<ShoppingCartTileProps> = ({
 
         <div className="cart-tile__rating">
           {renderStars(item.rating)}
-          <span className="rating-count">({Math.floor(Math.random() * 1000)})</span>
+          <span className="rating-count">
+            ({Math.floor(Math.random() * 1000)})
+          </span>
         </div>
 
         <div className="cart-tile__pricing">
@@ -60,38 +71,61 @@ const ShoppingCartTile: React.FC<ShoppingCartTileProps> = ({
           </div>
           <div className="original-price">
             <span className="mrp">M.R.P: </span>
-            <span className="crossed-price">₹{(item.price * 100).toFixed(0)}</span>
+            <span className="crossed-price">
+              ₹{(item.price * 100).toFixed(0)}
+            </span>
           </div>
-          <div className="discount">({Math.floor(20 + Math.random() * 30)}% off)</div>
+          <div className="discount">
+            ({Math.floor(20 + Math.random() * 30)}% off)
+          </div>
         </div>
 
         <div className="cart-tile__delivery">
           FREE delivery <strong>Wed, 4 Jun</strong>
         </div>
 
-        <div className="cart-tile__quantity-section">
-          <div className="cart-tile__quantity">
-            <label htmlFor={`quantity-${item.id}`}>Qty:</label>
-            <input
-              id={`quantity-${item.id}`}
-              type="number"
-              min="1"
-              max={item.stock}
-              value={item.quantity}
-              onChange={handleQuantityChange}
-            />
-          </div>
+        {showQuantityControls && (
+          <div className="cart-tile__quantity-section">
+            <div className="cart-tile__quantity">
+              <label htmlFor={`quantity-${item.id}`}>Qty:</label>
+              <input
+                id={`quantity-${item.id}`}
+                type="number"
+                min="1"
+                max={item.stock}
+                value={item.quantity || 1}
+                onChange={handleQuantityChange}
+                onClick={(e) => e.stopPropagation()}
+              />
+            </div>
 
-          <div className="cart-tile__total">Total: ₹{(item.price * 80 * (item.quantity ?? 0)).toFixed(0)}</div>
-        </div>
+            <div className="cart-tile__total">
+              Total: ₹{(item.price * 80 * (item.quantity ?? 1)).toFixed(0)}
+            </div>
+          </div>
+        )}
 
         <div className="cart-tile__actions">
-          <Button sx={{ backgroundColor: "var(--common-theme-color)" }} variant="contained">
-            Add to cart
-          </Button>
-          <Button variant="text" onClick={() => onRemove(item.id)}>
-            Remove
-          </Button>
+          {isInCart ? (
+            <Button
+              sx={{ backgroundColor: "#ee8096" }}
+              variant="contained"
+              onClick={(e) => {
+                e.stopPropagation();
+                onRemove?.(item.id);
+              }}
+            >
+              Remove from cart
+            </Button>
+          ) : (
+            <Button
+              sx={{ backgroundColor: "var(--common-theme-color)" }}
+              variant="contained"
+              onClick={handleAddToCartClick}
+            >
+              Add to cart
+            </Button>
+          )}
         </div>
       </div>
     </div>
