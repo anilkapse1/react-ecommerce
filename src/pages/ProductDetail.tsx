@@ -165,4 +165,4 @@ const ProductDetail: React.FC = () => {
   );
 };
 
-export default ProductDetail;
+export default React.memo(ProductDetail);

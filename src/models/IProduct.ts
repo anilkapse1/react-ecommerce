@@ -13,10 +13,12 @@ export interface Product {
 
 export interface ProductContextType {
   products: Product[];
+  originalProducts: Product[];
   loading: boolean;
   refreshProducts: () => void;
   setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  searchProducts: (value: string) => void;
 }
 
 export interface ShoppingCartTileProps {

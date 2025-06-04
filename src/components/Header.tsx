@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { HeaderWrapper } from "../styles/HeaderStyle";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
@@ -12,55 +12,28 @@ import { useCart } from "../context/CartContext";
 import ProductService from "../services/product.service";
 import { useToast } from "../context/ToastContext";
 import type { Product } from "../models/IProduct";
+import { useFilter } from "../context/FilterContext";
 
 const Header = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const { setProducts, setLoading, refreshProducts } = useProductContext();
+  const { refreshProducts, setLoading, searchProducts } = useProductContext();
+  const { searchQuery, setSearchQuery } = useFilter();
   const { showToast } = useToast();
   const { getCartItemsCount } = useCart();
 
   useEffect(() => {
     const delayDebounce = setTimeout(() => {
       if (searchQuery.trim() !== "") {
-        fetchSearchedProducts(searchQuery);
+        searchProducts(searchQuery);
       } else {
         // Optionally, fetch all products again if input is cleared
-       refreshProducts();
+        refreshProducts();
       }
-    }, 500); // 500ms debounce
+    }, 500); 
 
     return () => clearTimeout(delayDebounce);
   }, [searchQuery]);
 
   // CALL SEARCH QUERY
-  const fetchSearchedProducts = async (value: any) => {
-    setLoading(true);
-    try {
-      const productData = await ProductService.getProductsBySearch(value);
-      if (productData.products) {
-        const transformData = productData.products.map(
-          ({ id, title, price, thumbnail, brand, category, description, rating, stock }: Product) => ({
-            id,
-            title,
-            price,
-            thumbnail,
-            brand,
-            category,
-            description,
-            rating,
-            stock,
-            quantity: 1,
-          })
-        );
-        setProducts(transformData);
-        showToast("Products loaded successfully!", "success");
-      }
-    } catch (e) {
-      showToast("Failed to load products", "error");
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <React.Fragment>
@@ -104,4 +77,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default React.memo(Header);
