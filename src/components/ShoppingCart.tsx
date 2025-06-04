@@ -3,16 +3,23 @@ import ShoppingCartTile from "./ShoppingCartTile";
 import "../styles/ShoppingCart.scss";
 import { Typography } from "@mui/material";
 import { useProductContext } from "../context/ProductContext";
+import { useCart } from "../context/CartContext";
+import type { Product } from "../models/IProduct";
 
 const ShoppingCart: React.FC = () => {
   const { products, setProducts, loading } = useProductContext();
+  const { addToCart, removeFromCart } = useCart();
 
   const handleUpdateQuantity = (id: number, quantity: number) => {
     setProducts((items) => items.map((item) => (item.id === id ? { ...item, quantity } : item)));
   };
 
-  const handleRemove = (id: number) => {
-    setProducts((items) => items.filter((item) => item.id !== id));
+  const handleAddToCart = (product: Product, quantity: number = 1) => {
+  addToCart(product, quantity);
+};
+
+ const handleRemoveFromCart = (productId: number) => {
+    removeFromCart(productId);
   };
 
   if (loading) return <div className="loading">Loading products...</div>;
@@ -35,7 +42,14 @@ const ShoppingCart: React.FC = () => {
       ) : (
         <div className="shopping-cart__grid">
           {products.map((item) => (
-            <ShoppingCartTile key={item.id} item={item} onUpdateQuantity={handleUpdateQuantity} onRemove={handleRemove} />
+            <ShoppingCartTile
+             key={item.id}
+              item={item}
+              onUpdateQuantity={handleUpdateQuantity}
+              onAddToCart={handleAddToCart} 
+              showQuantityControls={true}
+              onRemove={handleRemoveFromCart}
+            />
           ))}
         </div>
       )}
