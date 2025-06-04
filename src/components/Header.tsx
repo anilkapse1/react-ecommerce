@@ -9,15 +9,11 @@ import logo from "../assets/logo1.png";
 import { useProductContext } from "../context/ProductContext";
 import { ROUTE_CONFIG } from "../constant/routes";
 import { useCart } from "../context/CartContext";
-import ProductService from "../services/product.service";
-import { useToast } from "../context/ToastContext";
-import type { Product } from "../models/IProduct";
 import { useFilter } from "../context/FilterContext";
 
 const Header = () => {
-  const { refreshProducts, setLoading, searchProducts } = useProductContext();
+  const { refreshProducts, searchProducts } = useProductContext();
   const { searchQuery, setSearchQuery } = useFilter();
-  const { showToast } = useToast();
   const { getCartItemsCount } = useCart();
 
   useEffect(() => {
